@@ -1,0 +1,19 @@
+body {
+    background-color: #eee;
+}
+
+.material-icons {
+    color: #aaa;
+}
+
+.material-icons.click {
+    @extend .material-icons;
+    cursor: pointer;
+    &:hover {
+        color: #777;
+    }
+}
+
+label {
+    font-weight: 700;
+}

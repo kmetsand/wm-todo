@@ -1,0 +1,87 @@
+<div class="container">
+    <div class="card">
+        <div class="card-block">
+            <button class="btn btn-secondary" [routerLink]="['/']">Back</button>
+        </div>
+        <div class="card-block" *ngIf="editing">
+            <div class="card-title">
+                <h3>Edit task</h3>
+            </div>
+            <form #taskForm="ngForm">
+                <div class="form-group">
+                    <label for="title-input">Title</label>
+                    <input id="title-input" type="text" class="form-control" placeholder="Title" [ngModel]="task.title" name="title" required>
+                </div>
+                <div class="form-group">
+                    <label for="description-input">Task description</label>
+                    <textarea class="form-control" id="description-input" rows="2" placeholder="Task description" [ngModel]="task.description" name="description"></textarea>
+                </div>
+                <div class="form-group">
+                    <div class="row ">
+                        <div class="col-sm-4">
+                            <input type="number" class="form-control" placeholder="Priority" min="1" max="10" [ngModel]="task.priority" name="priority">
+                            <small class="form-text text-muted">Set priority 1-10</small>
+                        </div>
+                        <div class="col-sm-4">
+                            <input type="text" class="form-control" placeholder="Assignee" required [ngModel]="task.assignee" name="assignee">
+                            <small class="form-text text-muted">Assign to person</small>
+                        </div>
+                        <div class="col-sm-4">
+                            <input type="date" class="form-control" placeholder="Due" required [ngModel]="task.due" name="due">
+                            <small class="form-text text-muted">Due date: mm/dd/yyyy</small>
+                        </div>
+                    </div>
+                </div>
+                <button type="button" class="btn btn-primary" (click)="save(taskForm)">Save</button>
+                <button type="button" class="btn btn-secondary" (click)="cancel()">Cancel</button>
+            </form>
+        </div>
+        <div class="card-block" *ngIf="!editing">
+            <div class="card-title d-flex justify-content-between align-items-center">
+                <h2>{{task.title}}</h2>
+                <h6>{{task.created | date}}</h6>
+            </div>
+            <div class="card-block">
+                <div *ngIf="task.description">{{task.description}}</div>
+                <div *ngIf="!task.description">No description</div>
+            </div>
+            <div class="card-block">
+                <div class="row d-flex justify-content-between">
+                    <div class="col-sm-4" *ngIf="task.priority">
+                        <div class="value">Priority: <span>{{task.priority}}</span></div>
+                    </div>
+                    <div class="col-sm-4">
+                        <div class="value">Assigned to: <span>{{task.assignee}}</span></div>
+                    </div>
+                    <div class="col-sm-4">
+                        <div class="value">Due by: <span>{{task.due | date}}</span></div>
+                    </div>
+                </div>
+            </div>
+            <div class="card-block" *ngIf="task.comments.length">
+                <div class="card-title">
+                    <h4>Comments:</h4>
+                </div>
+                <div class="d-flex justify-content-between" *ngFor="let comment of task.comments">
+                    <span>{{comment.text}}</span>
+                    <span>{{comment.date | date:'MMM d - HH:mm'}}</span>
+                </div>
+            </div>
+        </div>
+        <div class="card-block" *ngIf="!editing && !commenting">
+            <div class="d-flex justify-content-between">
+                <button type="button" class="btn btn-primary" (click)="edit()">Edit</button>
+                <button type="button" class="btn btn-primary" (click)="addComment()">Add a comment</button>
+            </div>
+        </div>
+        <div class="card-block" *ngIf="commenting">
+            <form #commentForm="ngForm">
+                <div class="form-group">
+                    <input type="text" class="form-control" id="comment-input" placeholder="Enter comment" [(ngModel)]="text" name="comment" required>
+                </div>
+                <button class="btn btn-primary" [disabled]="!commentForm.form.valid" (click)="saveComment()">Add comment</button>
+                <button type="button" class="btn btn-secondary" (click)="cancelComment()">Cancel</button>
+            </form>
+        </div>
+    </div>
+</div>

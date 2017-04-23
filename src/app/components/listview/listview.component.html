@@ -1,0 +1,62 @@
+<div class="card-block" *ngIf="tasklist.tasks.length || tasklist.folders.length">
+    <div class="card-title">
+        <h3>Tasks</h3>
+    </div>
+    <div class="list-group list-group-flush">
+        <div *ngFor="let folder of tasklist.folders" class="list-group-item list-group-action-item align-items-start">
+            <div class="data d-flex justify-content-between w-100">
+                <a class="d-flex align-items-center" (click)="folder.collapsed = !folder.collapsed" [attr.aria-expanded]="!folder.collapsed" aria-controls="sublist">
+                    <i class="material-icons">folder</i>
+                    <span class="title">{{folder.title}}</span>
+                </a>
+                <div class="icons">
+                    <span class="badge badge-default" *ngIf="folder.tasks.length">{{folder.tasks.length}}</span>
+                    <i class="material-icons click" *ngIf="!folder.tasks.length" (click)="delete(folder)" title="Delete folder">delete</i>
+                </div>
+            </div>
+            <div id="sublist" class="w-100" [ngbCollapse]="!folder.collapsed">
+                <div class="list-group">
+                    <div class="list-group-item" *ngFor="let task of folder.tasks">
+                        <div class="data d-flex justify-content-between w-100">
+                            <a class="title" [routerLink]="['/task/', task.id]">{{task.title}}</a>
+                            <div class="icons">
+                                <i class="material-icons click" title="Move to folder" (click)="open(task)">create_new_folder</i>
+                                <i class="material-icons click" (click)="delete(task, folder)" title="Delete task">delete</i>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div *ngFor="let task of tasklist.tasks" class="list-group-item list-group-action-item align-items-start">
+            <div class="data d-flex justify-content-between w-100">
+                <a class="title" [routerLink]="['/task/', task.id]">{{task.title}}</a>
+                <div class="icons">
+                    <i class="material-icons click" title="Move to folder" (click)="open(task)">create_new_folder</i>
+                    <i class="material-icons click" (click)="delete(task)" title="Delete task">delete</i>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="popup w-50" *ngIf="popup">
+    <div class="card">
+        <div class="card-block">
+            <button type="button" class="close" aria-label="Close" (click)="close()">
+				<span aria-hidden="true">&times;</span>
+			</button>
+            <div class="card-title">
+                <h3>Move to folder</h3>
+            </div>
+            <div class="card-block">
+                <select [(ngModel)]="taskgroup">
+					<option [ngValue]="null" *ngIf="!inFolder">Remove from folder</option>
+					<ng-container *ngIf="inFolder">
+						<option [ngValue]="folder" *ngFor="let folder of tasklist.folders">{{folder.title}}</option>
+					</ng-container>
+				</select>
+            </div>
+            <button class="btn btn-primary" (click)="move()">Move</button>
+        </div>
+    </div>
+</div>

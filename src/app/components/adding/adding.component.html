@@ -1,0 +1,56 @@
+<div class="card-block" *ngIf="!adding && !folderAdding">
+    <button (click)="create()" class="btn btn-primary">Add a new Task</button>
+    <button class="btn btn-primary" (click)="createFolder()">Add a new folder</button>
+</div>
+<div class="card-block" *ngIf="folderAdding">
+    <div class="card-title">
+        <h3>Add a new folder</h3>
+    </div>
+    <form #folderForm="ngForm">
+        <div class="form-group">
+            <label for="folder-title-input">Folder title *</label>
+            <input type="text" id="folder-title-input" class="form-control" placeholder="Title" [(ngModel)]="folderTitle" name="folder-title" required>
+        </div>
+        <div class="card-block">
+            <label>* Mandatory fields</label>
+        </div>
+        <button class="btn btn-primary" (click)="addFolder()" [disabled]="!folderForm.form.valid">Add folder</button>
+        <button type="button" class="btn btn-secondary" (click)="cancel()">Cancel</button>
+    </form>
+</div>
+<div class="card-block" *ngIf="adding">
+    <div class="card-title">
+        <h3>Add a new task</h3>
+    </div>
+    <form #taskForm="ngForm">
+        <div class="form-group">
+            <label for="title-input">Title *</label>
+            <input id="title-input" type="text" class="form-control" placeholder="Title" [(ngModel)]="title" name="title" required>
+        </div>
+        <div class="form-group">
+            <label for="description-input">Description</label>
+            <textarea class="form-control" id="description-input" rows="2" placeholder="Task description" [(ngModel)]="description" name="description"></textarea>
+        </div>
+        <div class="form-group">
+            <div class="row">
+                <div class="col-sm-4">
+                    <input type="number" class="form-control" placeholder="Priority" min="1" max="10" [(ngModel)]="priority" name="priority">
+                    <small class="form-text text-muted">Set priority 1-10</small>
+                </div>
+                <div class="col-sm-4">
+                    <input type="text" class="form-control" placeholder="Assignee" required [(ngModel)]="assignee" name="assignee">
+                    <small class="form-text text-muted">Assign to person *</small>
+                </div>
+                <div class="col-sm-4">
+                    <input type="date" class="form-control" placeholder="Due" required [(ngModel)]="due" name="due">
+                    <small class="form-text text-muted">Due date: mm/dd/yyyy *</small>
+                </div>
+            </div>
+        </div>
+        <div class="card-block">
+            <label>* Mandatory fields</label>
+        </div>
+        <button class="btn btn-primary" (click)="add()" [disabled]="!taskForm.form.valid">Add</button>
+        <button type="button" class="btn btn-secondary" (click)="cancel()">Cancel</button>
+    </form>
+</div>

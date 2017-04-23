@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { Person, Task, TaskGroup } from '../../models/task-list.model';
+import { Task, TaskGroup } from '../../models/task-list.model';
 import { TaskService } from '../../services/taskservice/task.service';
 
 @Component({
@@ -13,7 +13,7 @@ export class AddingComponent implements OnInit {
 	folderTitle: string;
 	description: string;
 	due: Date;
-	assignee: Person;
+	assignee: string;
 	priority: number;
 	adding: boolean = false;
 	folderAdding: boolean = false;

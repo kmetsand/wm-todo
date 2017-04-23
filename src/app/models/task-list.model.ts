@@ -78,11 +78,11 @@ export class Task {
 	description: string;
 	readonly created: Date;
 	due: Date;
-	assignee: Person;
+	assignee: string;
 	priority: number;
 	readonly comments: Array<Comment>;
 
-	constructor(title: string, description: string, due: Date, assignee: Person, priority?: number) {
+	constructor(title: string, description: string, due: Date, assignee: string, priority?: number) {
 		this.id = 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'.replace(/[xy]/g, (c) => {
 			let r = Math.random() * 16 | 0, v = c === 'x' ? r : (r & 0x3 | 0x8);
 			return v.toString(16);
@@ -94,14 +94,6 @@ export class Task {
 		this.assignee = assignee;
 		this.priority = priority;
 		this.comments = new Array<Comment>();
-	}
-}
-
-export class Person {
-	name: string;
-
-	constructor(name: string) {
-		this.name = name;
 	}
 }
 

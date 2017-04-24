@@ -5,6 +5,8 @@ import 'zone.js';
 import 'zone.js/dist/zone';
 import 'reflect-metadata';
 import 'rxjs';
+import 'intl';
+import 'intl/locale-data/jsonp/en';
 
 import { IsProduction } from '../environments/environment';
 

@@ -7,7 +7,7 @@ export class TaskService {
 
 	constructor() {
 		let content = JSON.parse(localStorage.getItem('todo-list-items'));
-		if (content.tasks.length || content.folders.length)
+		if (content && (content.tasks.length || content.folders.length))
 			this.tasklist.deserialize(content);
 		else {
 			let task = new Task('Read me before you start', 'This application uses your browser\'s Local Storage to store your data. \n This application ~should~ work on all major browsers. If it doesn\'t then blame the browser (probably needs another polyfill).', new Date(12 - 31 - 2017), 'You', 1);
